@@ -1,0 +1,62 @@
+﻿<canvas id="canvas" style="position:absolute !important;z-index:-1"></canvas>
+<video id="video"></video>
+
+@{
+    Html.DevExpress().Button(btn =>
+    {
+        btn.Name = "btnCapture";
+        btn.ClientSideEvents.Click = "function(s,e){save2();}";
+        btn.Text = "Capture";
+    }).GetHtml();
+}
+
+<script type="text/javascript">
+    var video = document.getElementById('video');
+    var canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
+    var vStream;
+
+    function streamWebCam(stream) {
+        vStream = stream;
+        video.srcObject = stream;
+        video.play();
+    }
+    function Stop() {
+        var track = vStream.getTracks()[0];
+        track.stop();
+
+    }
+
+    function throwError(e) {
+        alert(e.name);
+    }
+
+    function snap() {
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({ video: true }, streamWebCam, throwError);
+        }
+    }
+    function save() {
+        var canvas = document.getElementById('canvas');
+        //window.save(canvas);
+    }
+    function save2() {
+        //  window.open(canvas.toDataURL());
+
+        //
+        canvas.width = video.clientWidth;
+        canvas.height = video.clientHeight;
+        context.drawImage(video, 0, 0);
+        var gh = canvas.toDataURL();
+        var a = document.createElement('a');
+        a.href = gh;
+        a.download = 'image.png';
+        a.click();
+        //alert(gh);
+        Stop();
+        CapturePhoto.Hide();
+        //    window.save(canvas);
+    }
+</script>

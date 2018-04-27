@@ -1,0 +1,58 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Width = Unit.Percentage(100);
+
+        settings.Name = "StudentGridView";
+        settings.CallbackRouteValues = new { Controller = "Grade", Action = "StudentGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Grade", Action = "StudentGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Grade", Action = "StudentGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Grade", Action = "StudentGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Columns.Add("StudentId").Caption = "Id Number";
+        settings.Columns.Add("FullName");
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Grade Section";
+            col.FieldName = "GradeSection";
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties cbo = col.PropertiesEdit as ComboBoxProperties;
+            cbo.TextField = "GradeSection";
+            cbo.ValueField = "GradeSection";
+            cbo.DataSource = new UnitOfWork().SectionRepo.Fetch().Select(x => new { GradeSection = x.GradeLevels.GradeLevel + " " + x.SectionName }).ToList();
+        });
+
+        settings.SettingsDetail.ShowDetailRow = true;
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = true;
+
+        settings.SetDetailRowTemplateContent(col =>
+        {
+
+            ViewContext.Writer.Write("<h3> Enrollments </h3>");
+            Html.RenderAction("EnrollmentGridViewPartial", new { StudentId = DataBinder.Eval(col.DataItem, "Id") });
+        });
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

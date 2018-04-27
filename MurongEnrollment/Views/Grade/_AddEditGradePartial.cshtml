@@ -1,0 +1,43 @@
+﻿@model Grades
+<div class="row">
+    <div class="col-lg-6">
+        @{
+
+            Html.DevExpress().LabelFor(m => m.EnrolledSubjectId).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.EnrolledSubjectId, cbo =>
+            {
+                cbo.Properties.TextField = "Schedules.Subjects.SubjectCode";
+                cbo.Properties.ValueField = "Id";
+                cbo.Width = Unit.Percentage(100);
+            }).BindList(ViewBag.Subjects).GetHtml();
+        }
+    </div>
+    <div class="col-lg-6">
+        @{
+
+            Html.DevExpress().LabelFor(m => m.Grade).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Grade,txt=> { txt.Width = Unit.Percentage(100); }).GetHtml();
+        }
+    </div>
+
+</div>
+
+<div class="row margin-top-10">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnUpdate";
+                btn.ClientSideEvents.Click = "function(s,e){GradeGridView.UpdateEdit()}";
+                btn.Text = "Update";
+            }).GetHtml();
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnCancel";
+                btn.ClientSideEvents.Click = "function(s,e){GradeGridView.CancelEdit()}";
+                btn.Text = "Cancel";
+            }).GetHtml();
+
+        }
+    </div>
+</div>

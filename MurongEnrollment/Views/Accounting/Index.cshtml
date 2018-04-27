@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5>
+            <b>Payment            </b>
+        </h5>
+    </div>
+    <div class="panel-body">
+        @Html.Action("StudentGridViewPartial")
+    </div>
+</div>
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "PaymentPopupControl";
+    settings.AllowResize = true;
+    settings.ShowHeader = true;
+    settings.ShowOnPageLoad = false;
+    settings.AllowDragging = true;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.CloseOnEscape = false;
+    settings.Width = Unit.Pixel(700);
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    settings.Modal = true;
+    settings.HeaderText = "Payments History";
+// settings.PopupElementID = "PaymentPopupControl";
+
+settings.SetContent(() =>
+{
+        Html.RenderPartial("_PaymentGridViewPartial");
+    });
+}).GetHtml()
+
+
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "PrintPaymentPopupControl";
+    settings.AllowResize = true;
+    settings.ShowHeader = true;
+    settings.ShowOnPageLoad = false;
+    settings.AllowDragging = true;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.CloseOnEscape = false;
+    settings.Width = Unit.Pixel(700);
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    settings.Modal = true;
+    settings.HeaderText = "Payments Print Preview";
+// settings.PopupElementID = "PaymentPopupControl";
+
+settings.SetContent(() =>
+{
+        Html.RenderPartial("_PrintReceiptPartial");
+    });
+}).GetHtml()
+<script>
+    var _enrollmentId;
+    function paymentHistory(enrollmentId) {
+        _enrollmentId = enrollmentId;
+        //PaymentGridView.customArgs['EnrollmentId'] = enrollmentId;
+        PaymentGridView.PerformCallback({ EnrollmentId: enrollmentId });
+    }
+    function OnBeginCallback(s, e) {
+        e.customArgs["EnrollmentId"] = _enrollmentId;
+    }
+</script>

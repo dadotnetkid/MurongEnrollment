@@ -1,0 +1,150 @@
+﻿@model Students
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="pull-left">Subjects available for this student: <b> @(Model?.FullName)</b></h5>
+        @{
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnAddNewSubject";
+                btn.Text = "Add Subjects(Back/Behind/Advance)";
+                btn.ControlStyle.CssClass = "pull-right";
+                btn.ClientEnabled = false;
+                btn.ClientSideEvents.Click = "function(s,e){AddNewSubjectModal();}";
+
+            }).GetHtml();
+        }
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-3">
+                @{
+                    Html.DevExpress().LabelFor(m => m.Enrollment.SchoolYears.SchoolYear, lbl =>
+                    {
+                        lbl.Text = "School Year";
+                    }).GetHtml();
+                    Html.DevExpress().ComboBoxFor(m => m.Enrollment.SchoolYears.SchoolYear, cbo =>
+                    {
+                        cbo.Width = Unit.Percentage(100);
+                        cbo.Properties.ValueField = "Id";
+                        cbo.Properties.TextField = "SchoolYear";
+                        cbo.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){btnAddNewSubject.SetEnabled(true); schoolYearIdValue=s.GetValue();AvailableSubjectGridView.PerformCallback({SchoolYearId:schoolYearIdValue}); }";
+                    }).BindList(ViewBag.SchoolYear).GetHtml();
+                }
+            </div>
+            <div class="col-lg-3">
+                @{
+                    Html.DevExpress().LabelFor(m => m.Enrollment.Sections.GradeLevels.Id, lbl => { lbl.Text = "Grade Level"; }).GetHtml();
+                    Html.DevExpress().ComboBoxFor(m => m.Enrollment.Sections.GradeLevels.Id, cbo =>
+                    {
+                        cbo.Name = "GradeLevelId";
+                        cbo.Width = Unit.Percentage(100);
+                        cbo.Properties.ValueField = "Id";
+                        cbo.Properties.TextField = "GradeLevel";
+                        cbo.Properties.ClientSideEvents.SelectedIndexChanged = "function(s, e) { SectionId.PerformCallback({GradeLevelId:s.GetValue()}); }";
+                    }).BindList(new UnitOfWork().GradelevelRepo.Get().OrderBy(m => m.GradeLevel)).GetHtml();
+                }
+            </div>
+            <div class="col-lg-3">
+                @{
+                    Html.DevExpress().Label(lbl =>
+                    {
+                        lbl.Text = "Section";
+                        lbl.AssociatedControlName = "SectionId";
+                    }).GetHtml();
+                    Html.RenderAction("SectionPartial");
+                    // Html.RenderPartial("_SectionPartial");
+                }
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-lg-12">
+                @Html.Action("AvailableSubjectGridViewPartial", new { StudentId = ViewBag.StudentId })
+            </div>
+        </div>
+
+    </div>
+    <div class="panel-footer">
+        @{
+            using (Html.BeginForm("enrollStudent", "enrollment", FormMethod.Post, new { id = "form-enroll-student" }))
+            {
+
+                Html.DevExpress().Button(btn =>
+                {
+                    btn.Name = "btnEnroll";
+                    btn.Text = "Enroll Student";
+                    btn.ControlStyle.CssClass = "pull-right";
+                    btn.ClientEnabled = false;
+                    btn.ClientSideEvents.Click = "function(s,e){enrollStudent(s,e)}";
+                }).GetHtml();
+            }
+
+        }
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "AddNewSubject";
+    settings.HeaderText = "Add New Subject";
+    settings.AllowResize = true;
+    settings.ShowHeader = true;
+    settings.ShowOnPageLoad = false;
+    settings.AllowDragging = true;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.CloseOnEscape = false;
+    settings.Modal = true;
+    settings.Width = Unit.Pixel(400);
+    settings.Height = Unit.Pixel(250);
+    settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+//    settings.CallbackRouteValues = new {Controller="Enrollment",Action= "addnewsubjectpartial" };
+settings.ShowOnPageLoad = false;
+    settings.SetContent(() =>
+    {
+        Html.RenderAction("addnewsubjectpartial");
+        Html.DevExpress().Button(btn =>
+        {
+            btn.Name = "btnok";
+            btn.ClientSideEvents.Click = "function(s,e){AddSubjectSubmit()}";
+            btn.Text = "Ok";
+        }).GetHtml();
+    });
+}).GetHtml()
+
+<script>
+    var schoolYearIdValue = '';
+    var sectionIdValue = '';
+    var AddedSubjects='';
+    var AddedSubjectText = '';
+    function enrollStudent(s, e) {
+        var data = {
+            SchoolYearId: schoolYearIdValue,
+            SectionId: sectionIdValue,
+            AddedSubjects: tkbScheduleId.GetValue(),
+            StudentId:'@Model.Id'
+        };
+        var form = $('#form-enroll-student');
+        $.post(form.attr('action'), data, function (result) {
+            alert("Successfully Enrolled Student");
+            window.location = '@Url.Action("index","students")';
+        });
+    }
+    function AddNewSubjectModal() {
+        AddNewSubject.Show();
+        cbpScheduledId.PerformCallback({ SectionId: sectionIdValue, SchoolYearId: schoolYearIdValue, AddedSubjects: AddedSubjects });
+    }
+    function AddSubjectSubmit() {
+        AddNewSubject.Hide();
+        AddedSubjects = tkbScheduleId.GetValue();
+        AddedSubjectText = tkbScheduleId.GetText();
+    }
+</script>

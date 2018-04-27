@@ -1,0 +1,10 @@
+﻿
+@Html.DevExpress().ComboBox(cbo =>
+                    {
+                        cbo.Name = "GradeLevelId";
+                        cbo.Width = Unit.Percentage(100);
+                        cbo.Properties.ValueField = "Id";
+                        cbo.Properties.TextField = "GradeLevel";
+                        cbo.Properties.ClientSideEvents.SelectedIndexChanged = "function(s, e) { SectionId.PerformCallback({GradeLevelId:s.GetValue()}); }";
+                    }).BindList(new UnitOfWork().GradelevelRepo.Get()).GetHtml()
+@Html.Action("SectionPartial")

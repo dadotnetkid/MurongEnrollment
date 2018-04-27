@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5>
+            <b>Grade Level</b>
+        </h5>
+    </div>
+    <div class="panel-body">
+
+        @Html.Action("GradeLevelGridViewPartial")
+
+    </div>
+</div>

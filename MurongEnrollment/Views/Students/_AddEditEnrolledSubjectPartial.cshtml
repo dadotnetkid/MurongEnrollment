@@ -1,0 +1,50 @@
+﻿@*@model EnrolledSubjects
+    @{
+        Html.DevExpress().CallbackPanel(cbp => {
+
+            cbp.Name = "cbpAddEditEnrolledSubjectPartial";
+            cbp.CallbackRouteValues = new { Controller="Students",Action= "AddEditEnrolledSubjectPartial" };
+            cbp.SetContent(() => {
+                Html.RenderPartial("_cbpAddEditEnrolledSubjectPartial",Model);
+            });
+        }).GetHtml();
+    }*@
+
+@model EnrolledSubjects
+<div class="row">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().LabelFor(m => m.Schedules.SectionId, lbl => { lbl.Text = "Grade Level"; }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.Schedules.SectionId, cbo =>
+            {
+                cbo.Width = Unit.Percentage(100);
+                cbo.Name = "SectionId";
+                cbo.Properties.ValueField = "Id";
+                cbo.Properties.TextField = "Name";
+                cbo.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){console.log(s);ScheduleId.PerformCallback({SectionId:s.GetValue()})}";
+            }).BindList(new UnitOfWork().SectionRepo.Get().OrderBy(m => m.GradeLevels.GradeLevel).Select(x => new { Id = x.Id, Name = x.GradeLevels.GradeLevel + " " + x.SectionName })).GetHtml();
+        }
+    </div>
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().LabelFor(m => m.ScheduleId, lbl => { lbl.Text = "Schedule"; }).GetHtml();
+            Html.RenderPartial("_ScheduleSubjectPartial");
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().Button(btn => {
+                btn.Name = "btnUpdate";
+                btn.Text = "Update";
+                btn.ClientSideEvents.Click = "function(s,e){ScheduleGridViewPartial.UpdateEdit()}";
+            }).GetHtml();
+        Html.DevExpress().Button(btn => {
+        btn.Name = "btnCancel";
+        btn.Text = "Cancel";
+        btn.ClientSideEvents.Click = "function(s,e){ScheduleGridViewPartial.CancelEdit()}";
+        }).GetHtml();
+        }
+    </div>
+</div>

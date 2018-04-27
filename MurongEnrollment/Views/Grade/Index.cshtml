@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="pull-left"><b>Grades</b></h5>
+        @Html.DevExpress().Button(btn => { btn.Name = "btnPrint";btn.Text = "Print"; btn.ControlStyle.CssClass = "pull-right";btn.EnableClientSideAPI = true;btn.ClientEnabled = false;btn.ClientSideEvents.Click = "function(s,e){PrintGrade()}"; }).GetHtml();
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+
+        @*@Html.Action("StudentGridViewPartial")*@
+        <div class="row">
+            <div class="col-lg-3">
+                @{
+                    Html.DevExpress().Label(m => { m.AssociatedControlName = "StudentId"; m.Text = "Student"; }).GetHtml();
+                    Html.DevExpress().ComboBox(col =>
+                    {
+                        col.Width = Unit.Percentage(100);
+                        col.Name = "StudentId";
+                        col.Properties.ValueField = "Id";
+                        col.Properties.TextField = "FullName";
+                        col.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){EnrollmentId.PerformCallback({StudentId:s.GetValue()})}";
+                        
+                    }).BindList(new UnitOfWork().StudentRepo.Get()).GetHtml();
+                }
+            </div>
+            <div class="col-lg-3">
+                @{
+                    Html.DevExpress().Label(m => { m.AssociatedControlName = "EnrollmentId"; m.Text = "Enrollment School Year"; }).GetHtml();
+                    Html.RenderPartial("_cboEnrollmentPartial");
+                }
+            </div>
+            <div class="col-lg-3">
+                @{
+                    Html.DevExpress().Label(m => { m.AssociatedControlName = "Id"; m.Text = "Gradings"; }).GetHtml();
+                    Html.DevExpress().ComboBox(col =>
+                    {
+                        col.Width = Unit.Percentage(100);
+                        col.Name = "Id";
+                        col.Properties.ValueField = "Id";
+                        col.Properties.TextField = "Grading";
+                        col.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){Search()}";
+                        // col.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){EnrollmentId.PerformCallback({StudentId:s.GetValue()})}";
+                    }).BindList(new UnitOfWork().GradingsRepo.Get().OrderBy(m => m.Grading)).GetHtml();
+                }
+            </div>
+            <div class="col-lg-3 ">
+                @{
+
+                    Html.DevExpress().Button(btn => {
+                        btn.Name = "btnGet";
+                        btn.Text = "Search";
+                        btn.ClientSideEvents.Click = "function(s,e){_EnrollmentId=EnrollmentId.GetValue();_GradingId=Id.GetValue();GradeGridView.PerformCallback({EnrollmentId:EnrollmentId.GetValue(),GradingId:Id.GetValue()});}";
+                    });//.GetHtml();
+                }
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-lg-12">
+                @Html.Action("GradeGridViewPartial")
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "GradeReportPopupControl";
+    settings.AllowResize = true;
+    settings.ShowHeader = true;
+    settings.ShowOnPageLoad = false;
+    settings.AllowDragging = true;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.CloseOnEscape = true;
+    settings.Modal = true;
+    settings.HeaderText = "Grade Report";
+    settings.Width = Unit.Percentage(100);
+    settings.Height = Unit.Pixel(700);
+    settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    settings.SetContent(() =>
+    {
+        Html.RenderPartial("_GradeReportPartial");
+    });
+}).GetHtml()
+
+@Html.DevExpress().LoadingPanel(ldp =>
+{
+    ldp.Name = "ldpAddingGrade";
+    ldp.ContainerElementID = "frmAddSubject";
+
+}).GetHtml();
+
+<script>
+    var _EnrollmentId;
+    function Search() {
+        _EnrollmentId = EnrollmentId.GetValue();
+        _GradingId = Id.GetValue();
+        GradeGridView.PerformCallback({ EnrollmentId: EnrollmentId.GetValue(), GradingId: Id.GetValue() });
+        
+    }
+    function PrintGrade() {
+        GradeReportPopupControl.Show();
+
+        cbpGradeReport.PerformCallback({ EnrollmentId: EnrollmentId.GetValue(), GradingId: Id.GetValue() });
+    }
+</script>

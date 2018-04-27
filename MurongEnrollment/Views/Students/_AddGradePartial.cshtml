@@ -1,0 +1,28 @@
+﻿@model EnrolledSubjects
+
+@{
+    Html.DevExpress().CallbackPanel(cbp =>
+    {
+        cbp.Name = "cbpAddGradePartial";
+        cbp.CallbackRouteValues = new { Controller = "Students", Action = "AddGradePartial", EnrollmentId = ViewBag.EnrollmentId };
+
+        cbp.SetContent(() =>
+        {
+            if (Model != null)
+                Html.RenderPartial("_addgrade", Model);
+
+        });
+
+    }).GetHtml();
+}
+<script>
+    function AddGrade() {
+        var EnrolledSubject = {
+            EnrolledSubjectId: Id.GetValue(),
+            Grade: Grade.GetValue(),
+            EnrollmentId: $('#EnrollmentId').val()
+        }
+        cbpAddGradePartial.PerformCallback(EnrolledSubject);
+
+    }
+</script>

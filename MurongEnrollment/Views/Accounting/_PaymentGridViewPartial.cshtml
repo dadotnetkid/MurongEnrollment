@@ -1,0 +1,68 @@
+@{ 
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "PaymentGridView";
+        settings.CallbackRouteValues = new { Controller = "Accounting", Action = "PaymentGridViewPartial", EnrollmentId = ViewBag.EnrollmentId };
+        settings.ClientSideEvents.BeginCallback = "function(s,e){OnBeginCallback(s,e)}";
+        //   settings.ClientSideEvents. = "function(s,e){EnrollmentGridView.PerformCallback();}";
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Accounting", Action = "PaymentGridViewPartialAddNew", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Accounting", Action = "PaymentGridViewPartialUpdate", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Accounting", Action = "PaymentGridViewPartialDelete", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("ReceiptNumber");
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "PaymentDate";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+
+        });
+        settings.Columns.Add("PaymentAmount");
+
+        settings.Columns.Add(col =>
+        {
+            col.Width = Unit.Percentage(10);
+            col.EditFormSettings.Visible = DefaultBoolean.False;
+            col.SetDataItemTemplateContent(e =>
+            {
+
+                Html.DevExpress().Button(btn =>
+                {
+                    btn.Name = "btn" + DataBinder.Eval(e.DataItem, "Id");
+                    btn.Text = "Print Receipt";
+                    btn.ClientSideEvents.Click = "function(s,e){ PrintPaymentPopupControl.Show();cbpPrintReceiptPartial.PerformCallback({PaymentId:'" + DataBinder.Eval(e.DataItem, "Id") + "'})}";
+                }).GetHtml();
+
+            });
+
+        });
+
+    });//.Bind(Model).GetHtml();
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

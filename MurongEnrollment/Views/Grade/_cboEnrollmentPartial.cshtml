@@ -1,0 +1,13 @@
+﻿
+@{ 
+
+    Html.DevExpress().ComboBox(col => {
+
+        col.Width = Unit.Percentage(100);
+        col.CallbackRouteValues = new {Controller="Grade",Action ="CboEnrollmentPartial"};
+        col.Name = "EnrollmentId";
+        col.Properties.ValueField = "Id";
+        col.Properties.TextField = "SchoolYears.SchoolYear";
+        col.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){Search()}";
+    }).BindList(Model).GetHtml();
+}

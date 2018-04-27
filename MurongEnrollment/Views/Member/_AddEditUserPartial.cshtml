@@ -1,0 +1,90 @@
+﻿@model AspNetUsers
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.AspNetUserDetails.FirstName, lbl =>
+            { lbl.Text = "First Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.AspNetUserDetails.FirstName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.AspNetUserDetails.MiddleName, lbl =>
+            { lbl.Text = "Middle Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.AspNetUserDetails.MiddleName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.AspNetUserDetails.LastName, lbl =>
+            { lbl.Text = "Last Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.AspNetUserDetails.LastName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.UserName, lbl =>
+            { lbl.Text = "UserName"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.UserName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.UserRoles, lbl =>
+            { lbl.Text = "UserRoles"; }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.UserRoles, txt =>
+            {
+                txt.Properties.ValueField = "Name";
+                txt.Properties.TextField = "Name";
+                txt.Width = Unit.Percentage(100);
+            }).BindList(new UnitOfWork().RoleRepository.Get()).Bind(Model?.AspNetRoles.FirstOrDefault(), "Name").GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Password, lbl =>
+            {
+                if(Model==null)
+                    lbl.Text = "Password";
+                else
+                    lbl.Text = "Password(Leave if no changes)";
+            }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Password, txt =>
+            {
+                txt.Properties.Password = true;
+                txt.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnUpdate";
+                btn.Text = "Update";
+                btn.ClientSideEvents.Click = "function(s,e){MembersGridView.UpdateEdit()}";
+            }).GetHtml();
+            Html.DevExpress().Button(btn =>
+            {
+                btn.ClientSideEvents.Click = "function(s,e){MembersGridView.CancelEdit()}";
+                btn.Name = "btnCancel";
+                btn.Text = "Cancel";
+                btn.Style.Add(HtmlTextWriterStyle.MarginLeft, "5px");
+            }).GetHtml();
+        }
+    </div>
+</div>

@@ -1,0 +1,1512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EnrollmentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumni">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EnrollmentId" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserDetails">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="255" />
+          <Property Name="Department" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CourseCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="CourseName" Type="nvarchar" MaxLength="255" />
+          <Property Name="CourseDescription" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="EducationAttainments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EducationLevel" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="EnrolledSubjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EnrollmentId" Type="nvarchar" MaxLength="255" />
+          <Property Name="ScheduleId" Type="nvarchar" MaxLength="255" />
+          <Property Name="Grade" Type="money" />
+        </EntityType>
+        <EntityType Name="Enrollments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SectionId" Type="nvarchar" MaxLength="255" />
+          <Property Name="SchoolYearId" Type="nvarchar" MaxLength="255" />
+          <Property Name="StudentId" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="GradeLevels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EducationAttainmentId" Type="nvarchar" MaxLength="255" />
+          <Property Name="GradeLevel" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Grades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EnrolledSubjectId" Type="nvarchar" MaxLength="255" />
+          <Property Name="GradingId" Type="nvarchar" MaxLength="255" />
+          <Property Name="Grade" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Gradings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Grading" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EnrollmentId" Type="nvarchar" MaxLength="255" />
+          <Property Name="ReceiptNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="PaymentDate" Type="datetime2" Precision="7" />
+          <Property Name="PaymentAmount" Type="money" />
+        </EntityType>
+        <EntityType Name="Schedules">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SchoolYearId" Type="nvarchar" MaxLength="255" />
+          <Property Name="SubjectId" Type="nvarchar" MaxLength="255" />
+          <Property Name="SectionId" Type="nvarchar" MaxLength="255" />
+          <Property Name="TeacherId" Type="nvarchar" MaxLength="255" />
+          <Property Name="Time" Type="nvarchar" MaxLength="255" />
+          <Property Name="Days" Type="nvarchar" MaxLength="255" />
+          <Property Name="Room" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="SchoolYears">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EducationAttainmentId" Type="nvarchar" MaxLength="255" />
+          <Property Name="SchoolYear" Type="nvarchar" MaxLength="255" />
+          <Property Name="Semester" Type="nvarchar" MaxLength="255" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Sections">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="GradeLevelId" Type="nvarchar" MaxLength="255" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="StandardFees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="GradeLevelId" Type="nvarchar" MaxLength="255" />
+          <Property Name="SchoolYearId" Type="nvarchar" MaxLength="255" />
+          <Property Name="FeeName" Type="nvarchar" MaxLength="255" />
+          <Property Name="FeeAmount" Type="money" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="StudentId" Type="nvarchar" MaxLength="255" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="255" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="MotherName" Type="nvarchar" MaxLength="255" />
+          <Property Name="MotherOccupation" Type="nvarchar" MaxLength="255" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="255" />
+          <Property Name="FatherOccupation" Type="nvarchar" MaxLength="255" />
+          <Property Name="GuardianContact" Type="nvarchar" MaxLength="255" />
+          <Property Name="Picture" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CourseId" Type="nvarchar" MaxLength="255" />
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="SubjectDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="Unit" Type="int" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_Alumni_Enrollments">
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="0..1" />
+          <End Role="Alumni" Type="Self.Alumni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Alumni">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserDetails_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserDetails" Type="Self.AspNetUserDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnrolledSubjects_EnrolledSubjects">
+          <End Role="Schedules" Type="Self.Schedules" Multiplicity="0..1" />
+          <End Role="EnrolledSubjects" Type="Self.EnrolledSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedules">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubjects">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnrolledSubjects_Enrollments">
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="0..1" />
+          <End Role="EnrolledSubjects" Type="Self.EnrolledSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubjects">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Enrollments">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="0..1" />
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Sections">
+          <End Role="Sections" Type="Self.Sections" Multiplicity="0..1" />
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grades_EnrolledSubjects">
+          <End Role="EnrolledSubjects" Type="Self.EnrolledSubjects" Multiplicity="0..1" />
+          <End Role="Grades" Type="Self.Grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnrolledSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="EnrolledSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grades_Gradings">
+          <End Role="Gradings" Type="Self.Gradings" Multiplicity="0..1" />
+          <End Role="Grades" Type="Self.Grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gradings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="GradingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Enrollments">
+          <End Role="Enrollments" Type="Self.Enrollments" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_SchoolYears">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="0..1" />
+          <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_Sections">
+          <End Role="Sections" Type="Self.Sections" Multiplicity="0..1" />
+          <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="0..1" />
+          <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolYear_EducationAttainment">
+          <End Role="EducationAttainments" Type="Self.EducationAttainments" Multiplicity="0..1" />
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EducationAttainments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolYears">
+              <PropertyRef Name="EducationAttainmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sections_Gradelevels">
+          <End Role="GradeLevels" Type="Self.GradeLevels" Multiplicity="0..1" />
+          <End Role="Sections" Type="Self.Sections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeLevels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sections">
+              <PropertyRef Name="GradeLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StandardFees_Gradelevels">
+          <End Role="GradeLevels" Type="Self.GradeLevels" Multiplicity="0..1" />
+          <End Role="StandardFees" Type="Self.StandardFees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeLevels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandardFees">
+              <PropertyRef Name="GradeLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StandardFees_StandardFees">
+          <End Role="SchoolYears" Type="Self.SchoolYears" Multiplicity="0..1" />
+          <End Role="StandardFees" Type="Self.StandardFees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandardFees">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subject_Course">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="0..1" />
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EnrollmentModelStoreContainer">
+          <EntitySet Name="Alumni" EntityType="Self.Alumni" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserDetails" EntityType="Self.AspNetUserDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EducationAttainments" EntityType="Self.EducationAttainments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EnrolledSubjects" EntityType="Self.EnrolledSubjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrollments" EntityType="Self.Enrollments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GradeLevels" EntityType="Self.GradeLevels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gradings" EntityType="Self.Gradings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolYears" EntityType="Self.SchoolYears" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sections" EntityType="Self.Sections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandardFees" EntityType="Self.StandardFees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Alumni_Enrollments" Association="Self.FK_Alumni_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="Alumni" EntitySet="Alumni" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserDetails_AspNetUsers" Association="Self.FK_AspNetUserDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserDetails" EntitySet="AspNetUserDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnrolledSubjects_EnrolledSubjects" Association="Self.FK_EnrolledSubjects_EnrolledSubjects">
+            <End Role="Schedules" EntitySet="Schedules" />
+            <End Role="EnrolledSubjects" EntitySet="EnrolledSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnrolledSubjects_Enrollments" Association="Self.FK_EnrolledSubjects_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="EnrolledSubjects" EntitySet="EnrolledSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Enrollments" Association="Self.FK_Enrollments_Enrollments">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Sections" Association="Self.FK_Enrollments_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Students" Association="Self.FK_Enrollments_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grades_EnrolledSubjects" Association="Self.FK_Grades_EnrolledSubjects">
+            <End Role="EnrolledSubjects" EntitySet="EnrolledSubjects" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grades_Gradings" Association="Self.FK_Grades_Gradings">
+            <End Role="Gradings" EntitySet="Gradings" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Enrollments" Association="Self.FK_Payments_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_SchoolYears" Association="Self.FK_Schedules_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_Sections" Association="Self.FK_Schedules_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_Subjects" Association="Self.FK_Schedules_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_Teachers" Association="Self.FK_Schedules_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolYear_EducationAttainment" Association="Self.FK_SchoolYear_EducationAttainment">
+            <End Role="EducationAttainments" EntitySet="EducationAttainments" />
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sections_Gradelevels" Association="Self.FK_Sections_Gradelevels">
+            <End Role="GradeLevels" EntitySet="GradeLevels" />
+            <End Role="Sections" EntitySet="Sections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StandardFees_Gradelevels" Association="Self.FK_StandardFees_Gradelevels">
+            <End Role="GradeLevels" EntitySet="GradeLevels" />
+            <End Role="StandardFees" EntitySet="StandardFees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StandardFees_StandardFees" Association="Self.FK_StandardFees_StandardFees">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="StandardFees" EntitySet="StandardFees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subject_Course" Association="Self.FK_Subject_Course">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EnrollmentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EnrollmentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="EnrollmentModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="EnrollmentModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="EnrollmentModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="EnrollmentModel.AspNetUsers" />
+          <EntitySet Name="Courses" EntityType="EnrollmentModel.Courses" />
+          <EntitySet Name="EducationAttainments" EntityType="EnrollmentModel.EducationAttainments" />
+          <EntitySet Name="EnrolledSubjects" EntityType="EnrollmentModel.EnrolledSubjects" />
+          <EntitySet Name="Enrollments" EntityType="EnrollmentModel.Enrollments" />
+          <EntitySet Name="GradeLevels" EntityType="EnrollmentModel.GradeLevels" />
+          <EntitySet Name="Payments" EntityType="EnrollmentModel.Payments" />
+          <EntitySet Name="Schedules" EntityType="EnrollmentModel.Schedules" />
+          <EntitySet Name="SchoolYears" EntityType="EnrollmentModel.SchoolYears" />
+          <EntitySet Name="Sections" EntityType="EnrollmentModel.Sections" />
+          <EntitySet Name="StandardFees" EntityType="EnrollmentModel.StandardFees" />
+          <EntitySet Name="Students" EntityType="EnrollmentModel.Students" />
+          <EntitySet Name="Subjects" EntityType="EnrollmentModel.Subjects" />
+          <EntitySet Name="Teachers" EntityType="EnrollmentModel.Teachers" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="EnrollmentModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="EnrollmentModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subject_Course" Association="EnrollmentModel.FK_Subject_Course">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolYear_EducationAttainment" Association="EnrollmentModel.FK_SchoolYear_EducationAttainment">
+            <End Role="EducationAttainments" EntitySet="EducationAttainments" />
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnrolledSubjects_EnrolledSubjects" Association="EnrollmentModel.FK_EnrolledSubjects_EnrolledSubjects">
+            <End Role="Schedules" EntitySet="Schedules" />
+            <End Role="EnrolledSubjects" EntitySet="EnrolledSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnrolledSubjects_Enrollments" Association="EnrollmentModel.FK_EnrolledSubjects_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="EnrolledSubjects" EntitySet="EnrolledSubjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Enrollments" Association="EnrollmentModel.FK_Enrollments_Enrollments">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Sections" Association="EnrollmentModel.FK_Enrollments_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrollments_Students" Association="EnrollmentModel.FK_Enrollments_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="Enrollments" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Enrollments" Association="EnrollmentModel.FK_Payments_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sections_Gradelevels" Association="EnrollmentModel.FK_Sections_Gradelevels">
+            <End Role="GradeLevels" EntitySet="GradeLevels" />
+            <End Role="Sections" EntitySet="Sections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StandardFees_Gradelevels" Association="EnrollmentModel.FK_StandardFees_Gradelevels">
+            <End Role="GradeLevels" EntitySet="GradeLevels" />
+            <End Role="StandardFees" EntitySet="StandardFees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_SchoolYears" Association="EnrollmentModel.FK_Schedules_SchoolYears">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_Sections" Association="EnrollmentModel.FK_Schedules_Sections">
+            <End Role="Sections" EntitySet="Sections" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_Subjects" Association="EnrollmentModel.FK_Schedules_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Schedules_Teachers" Association="EnrollmentModel.FK_Schedules_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Schedules" EntitySet="Schedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StandardFees_StandardFees" Association="EnrollmentModel.FK_StandardFees_StandardFees">
+            <End Role="SchoolYears" EntitySet="SchoolYears" />
+            <End Role="StandardFees" EntitySet="StandardFees" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="EnrollmentModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUserDetails" EntityType="EnrollmentModel.AspNetUserDetails" />
+          <AssociationSet Name="FK_AspNetUserDetails_AspNetUsers" Association="EnrollmentModel.FK_AspNetUserDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserDetails" EntitySet="AspNetUserDetails" />
+          </AssociationSet>
+          <EntitySet Name="Alumni" EntityType="EnrollmentModel.Alumni" />
+          <AssociationSet Name="FK_Alumni_Enrollments" Association="EnrollmentModel.FK_Alumni_Enrollments">
+            <End Role="Enrollments" EntitySet="Enrollments" />
+            <End Role="Alumni" EntitySet="Alumni" />
+          </AssociationSet>
+          <EntitySet Name="Grades" EntityType="EnrollmentModel.Grades" />
+          <EntitySet Name="Gradings" EntityType="EnrollmentModel.Gradings" />
+          <AssociationSet Name="FK_Grades_EnrolledSubjects" Association="EnrollmentModel.FK_Grades_EnrolledSubjects">
+            <End Role="EnrolledSubjects" EntitySet="EnrolledSubjects" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grades_Gradings" Association="EnrollmentModel.FK_Grades_Gradings">
+            <End Role="Gradings" EntitySet="Gradings" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EnrollmentModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EnrollmentModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EnrollmentModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="EnrollmentModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="EnrollmentModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="EnrollmentModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetUserDetails" Relationship="EnrollmentModel.FK_AspNetUserDetails_AspNetUsers" FromRole="AspNetUsers" ToRole="AspNetUserDetails" />
+        </EntityType>
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CourseCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CourseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CourseDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Subjects" Relationship="EnrollmentModel.FK_Subject_Course" FromRole="Courses" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="EducationAttainments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EducationLevel" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SchoolYears" Relationship="EnrollmentModel.FK_SchoolYear_EducationAttainment" FromRole="EducationAttainments" ToRole="SchoolYears" />
+        </EntityType>
+        <EntityType Name="EnrolledSubjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EnrollmentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduleId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Schedules" Relationship="EnrollmentModel.FK_EnrolledSubjects_EnrolledSubjects" FromRole="EnrolledSubjects" ToRole="Schedules" />
+          <NavigationProperty Name="Enrollments" Relationship="EnrollmentModel.FK_EnrolledSubjects_Enrollments" FromRole="EnrolledSubjects" ToRole="Enrollments" />
+          <Property Name="Grade" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Grades" Relationship="EnrollmentModel.FK_Grades_EnrolledSubjects" FromRole="EnrolledSubjects" ToRole="Grades" />
+        </EntityType>
+        <EntityType Name="Enrollments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SectionId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolYearId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StudentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EnrolledSubjects" Relationship="EnrollmentModel.FK_EnrolledSubjects_Enrollments" FromRole="Enrollments" ToRole="EnrolledSubjects" />
+          <NavigationProperty Name="SchoolYears" Relationship="EnrollmentModel.FK_Enrollments_Enrollments" FromRole="Enrollments" ToRole="SchoolYears" />
+          <NavigationProperty Name="Sections" Relationship="EnrollmentModel.FK_Enrollments_Sections" FromRole="Enrollments" ToRole="Sections" />
+          <NavigationProperty Name="Students" Relationship="EnrollmentModel.FK_Enrollments_Students" FromRole="Enrollments" ToRole="Students" />
+          <NavigationProperty Name="Payments" Relationship="EnrollmentModel.FK_Payments_Enrollments" FromRole="Enrollments" ToRole="Payments" />
+          <NavigationProperty Name="Alumni" Relationship="EnrollmentModel.FK_Alumni_Enrollments" FromRole="Enrollments" ToRole="Alumni" />
+        </EntityType>
+        <EntityType Name="GradeLevels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EducationAttainmentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GradeLevel" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sections" Relationship="EnrollmentModel.FK_Sections_Gradelevels" FromRole="GradeLevels" ToRole="Sections" />
+          <NavigationProperty Name="StandardFees" Relationship="EnrollmentModel.FK_StandardFees_Gradelevels" FromRole="GradeLevels" ToRole="StandardFees" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EnrollmentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Enrollments" Relationship="EnrollmentModel.FK_Payments_Enrollments" FromRole="Payments" ToRole="Enrollments" />
+          <Property Name="PaymentAmount" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Schedules">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolYearId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SectionId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Days" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Room" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EnrolledSubjects" Relationship="EnrollmentModel.FK_EnrolledSubjects_EnrolledSubjects" FromRole="Schedules" ToRole="EnrolledSubjects" />
+          <NavigationProperty Name="SchoolYears" Relationship="EnrollmentModel.FK_Schedules_SchoolYears" FromRole="Schedules" ToRole="SchoolYears" />
+          <NavigationProperty Name="Sections" Relationship="EnrollmentModel.FK_Schedules_Sections" FromRole="Schedules" ToRole="Sections" />
+          <NavigationProperty Name="Subjects" Relationship="EnrollmentModel.FK_Schedules_Subjects" FromRole="Schedules" ToRole="Subjects" />
+          <NavigationProperty Name="Teachers" Relationship="EnrollmentModel.FK_Schedules_Teachers" FromRole="Schedules" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="SchoolYears">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EducationAttainmentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolYear" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Semester" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="EducationAttainments" Relationship="EnrollmentModel.FK_SchoolYear_EducationAttainment" FromRole="SchoolYears" ToRole="EducationAttainments" />
+          <NavigationProperty Name="Enrollments" Relationship="EnrollmentModel.FK_Enrollments_Enrollments" FromRole="SchoolYears" ToRole="Enrollments" />
+          <NavigationProperty Name="Schedules" Relationship="EnrollmentModel.FK_Schedules_SchoolYears" FromRole="SchoolYears" ToRole="Schedules" />
+          <NavigationProperty Name="StandardFees" Relationship="EnrollmentModel.FK_StandardFees_StandardFees" FromRole="SchoolYears" ToRole="StandardFees" />
+        </EntityType>
+        <EntityType Name="Sections">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GradeLevelId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SectionName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Enrollments" Relationship="EnrollmentModel.FK_Enrollments_Sections" FromRole="Sections" ToRole="Enrollments" />
+          <NavigationProperty Name="GradeLevels" Relationship="EnrollmentModel.FK_Sections_Gradelevels" FromRole="Sections" ToRole="GradeLevels" />
+          <NavigationProperty Name="Schedules" Relationship="EnrollmentModel.FK_Schedules_Sections" FromRole="Sections" ToRole="Schedules" />
+        </EntityType>
+        <EntityType Name="StandardFees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GradeLevelId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolYearId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FeeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FeeAmount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="GradeLevels" Relationship="EnrollmentModel.FK_StandardFees_Gradelevels" FromRole="StandardFees" ToRole="GradeLevels" />
+          <NavigationProperty Name="SchoolYears" Relationship="EnrollmentModel.FK_StandardFees_StandardFees" FromRole="StandardFees" ToRole="SchoolYears" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StudentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="Contact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MotherOccupation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FatherOccupation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GuardianContact" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Enrollments" Relationship="EnrollmentModel.FK_Enrollments_Students" FromRole="Students" ToRole="Enrollments" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CourseId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="Int32" />
+          <NavigationProperty Name="Courses" Relationship="EnrollmentModel.FK_Subject_Course" FromRole="Subjects" ToRole="Courses" />
+          <NavigationProperty Name="Schedules" Relationship="EnrollmentModel.FK_Schedules_Subjects" FromRole="Subjects" ToRole="Schedules" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Schedules" Relationship="EnrollmentModel.FK_Schedules_Teachers" FromRole="Teachers" ToRole="Schedules" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="EnrollmentModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EnrollmentModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="EnrollmentModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EnrollmentModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subject_Course">
+          <End Type="EnrollmentModel.Courses" Role="Courses" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Subjects" Role="Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolYear_EducationAttainment">
+          <End Type="EnrollmentModel.EducationAttainments" Role="EducationAttainments" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.SchoolYears" Role="SchoolYears" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EducationAttainments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolYears">
+              <PropertyRef Name="EducationAttainmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnrolledSubjects_EnrolledSubjects">
+          <End Type="EnrollmentModel.Schedules" Role="Schedules" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.EnrolledSubjects" Role="EnrolledSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedules">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubjects">
+              <PropertyRef Name="ScheduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnrolledSubjects_Enrollments">
+          <End Type="EnrollmentModel.Enrollments" Role="Enrollments" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.EnrolledSubjects" Role="EnrolledSubjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnrolledSubjects">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Enrollments">
+          <End Type="EnrollmentModel.SchoolYears" Role="SchoolYears" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Enrollments" Role="Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Sections">
+          <End Type="EnrollmentModel.Sections" Role="Sections" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Enrollments" Role="Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrollments_Students">
+          <End Type="EnrollmentModel.Students" Role="Students" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Enrollments" Role="Enrollments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollments">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Enrollments">
+          <End Type="EnrollmentModel.Enrollments" Role="Enrollments" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Payments" Role="Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sections_Gradelevels">
+          <End Type="EnrollmentModel.GradeLevels" Role="GradeLevels" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Sections" Role="Sections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeLevels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sections">
+              <PropertyRef Name="GradeLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StandardFees_Gradelevels">
+          <End Type="EnrollmentModel.GradeLevels" Role="GradeLevels" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.StandardFees" Role="StandardFees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeLevels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandardFees">
+              <PropertyRef Name="GradeLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_SchoolYears">
+          <End Type="EnrollmentModel.SchoolYears" Role="SchoolYears" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Schedules" Role="Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_Sections">
+          <End Type="EnrollmentModel.Sections" Role="Sections" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Schedules" Role="Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_Subjects">
+          <End Type="EnrollmentModel.Subjects" Role="Subjects" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Schedules" Role="Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Schedules_Teachers">
+          <End Type="EnrollmentModel.Teachers" Role="Teachers" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Schedules" Role="Schedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Schedules">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StandardFees_StandardFees">
+          <End Type="EnrollmentModel.SchoolYears" Role="SchoolYears" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.StandardFees" Role="StandardFees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolYears">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StandardFees">
+              <PropertyRef Name="SchoolYearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="EnrollmentModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="EnrollmentModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityType Name="AspNetUserDetails">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EnrollmentModel.FK_AspNetUserDetails_AspNetUsers" FromRole="AspNetUserDetails" ToRole="AspNetUsers" />
+        </EntityType>
+        <Association Name="FK_AspNetUserDetails_AspNetUsers">
+          <End Type="EnrollmentModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="EnrollmentModel.AspNetUserDetails" Role="AspNetUserDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Alumni">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EnrollmentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Enrollments" Relationship="EnrollmentModel.FK_Alumni_Enrollments" FromRole="Alumni" ToRole="Enrollments" />
+        </EntityType>
+        <Association Name="FK_Alumni_Enrollments">
+          <End Type="EnrollmentModel.Enrollments" Role="Enrollments" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Alumni" Role="Alumni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enrollments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Alumni">
+              <PropertyRef Name="EnrollmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Grades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EnrolledSubjectId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GradingId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="EnrolledSubjects" Relationship="EnrollmentModel.FK_Grades_EnrolledSubjects" FromRole="Grades" ToRole="EnrolledSubjects" />
+          <NavigationProperty Name="Gradings" Relationship="EnrollmentModel.FK_Grades_Gradings" FromRole="Grades" ToRole="Gradings" />
+        </EntityType>
+        <EntityType Name="Gradings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Grading" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Grades" Relationship="EnrollmentModel.FK_Grades_Gradings" FromRole="Gradings" ToRole="Grades" />
+        </EntityType>
+        <Association Name="FK_Grades_EnrolledSubjects">
+          <End Type="EnrollmentModel.EnrolledSubjects" Role="EnrolledSubjects" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Grades" Role="Grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnrolledSubjects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="EnrolledSubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grades_Gradings">
+          <End Type="EnrollmentModel.Gradings" Role="Gradings" Multiplicity="0..1" />
+          <End Type="EnrollmentModel.Grades" Role="Grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gradings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="GradingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EnrollmentModelStoreContainer" CdmEntityContainer="EnrollmentEntities">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="EnrollmentModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="EnrollmentModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="EnrollmentModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="EnrollmentModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="EnrollmentModel.Courses">
+              <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="CourseDescription" ColumnName="CourseDescription" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EducationAttainments">
+            <EntityTypeMapping TypeName="EnrollmentModel.EducationAttainments">
+              <MappingFragment StoreEntitySet="EducationAttainments">
+                <ScalarProperty Name="EducationLevel" ColumnName="EducationLevel" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnrolledSubjects">
+            <EntityTypeMapping TypeName="EnrollmentModel.EnrolledSubjects">
+              <MappingFragment StoreEntitySet="EnrolledSubjects">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="EnrollmentId" ColumnName="EnrollmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollments">
+            <EntityTypeMapping TypeName="EnrollmentModel.Enrollments">
+              <MappingFragment StoreEntitySet="Enrollments">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="SchoolYearId" ColumnName="SchoolYearId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GradeLevels">
+            <EntityTypeMapping TypeName="EnrollmentModel.GradeLevels">
+              <MappingFragment StoreEntitySet="GradeLevels">
+                <ScalarProperty Name="GradeLevel" ColumnName="GradeLevel" />
+                <ScalarProperty Name="EducationAttainmentId" ColumnName="EducationAttainmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="EnrollmentModel.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
+                <ScalarProperty Name="EnrollmentId" ColumnName="EnrollmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="EnrollmentModel.Schedules">
+              <MappingFragment StoreEntitySet="Schedules">
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="SchoolYearId" ColumnName="SchoolYearId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolYears">
+            <EntityTypeMapping TypeName="EnrollmentModel.SchoolYears">
+              <MappingFragment StoreEntitySet="SchoolYears">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="EducationAttainmentId" ColumnName="EducationAttainmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="EnrollmentModel.Sections">
+              <MappingFragment StoreEntitySet="Sections">
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="GradeLevelId" ColumnName="GradeLevelId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandardFees">
+            <EntityTypeMapping TypeName="EnrollmentModel.StandardFees">
+              <MappingFragment StoreEntitySet="StandardFees">
+                <ScalarProperty Name="FeeAmount" ColumnName="FeeAmount" />
+                <ScalarProperty Name="FeeName" ColumnName="FeeName" />
+                <ScalarProperty Name="SchoolYearId" ColumnName="SchoolYearId" />
+                <ScalarProperty Name="GradeLevelId" ColumnName="GradeLevelId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="EnrollmentModel.Students">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="GuardianContact" ColumnName="GuardianContact" />
+                <ScalarProperty Name="FatherOccupation" ColumnName="FatherOccupation" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="MotherOccupation" ColumnName="MotherOccupation" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="EnrollmentModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="SubjectDescription" ColumnName="SubjectDescription" />
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="EnrollmentModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EnrollmentModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="AspNetUserDetails">
+            <EntityTypeMapping TypeName="EnrollmentModel.AspNetUserDetails">
+              <MappingFragment StoreEntitySet="AspNetUserDetails">
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alumni">
+            <EntityTypeMapping TypeName="EnrollmentModel.Alumni">
+              <MappingFragment StoreEntitySet="Alumni">
+                <ScalarProperty Name="EnrollmentId" ColumnName="EnrollmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="EnrollmentModel.Grades">
+              <MappingFragment StoreEntitySet="Grades">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="GradingId" ColumnName="GradingId" />
+                <ScalarProperty Name="EnrolledSubjectId" ColumnName="EnrolledSubjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gradings">
+            <EntityTypeMapping TypeName="EnrollmentModel.Gradings">
+              <MappingFragment StoreEntitySet="Gradings">
+                <ScalarProperty Name="Grading" ColumnName="Grading" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

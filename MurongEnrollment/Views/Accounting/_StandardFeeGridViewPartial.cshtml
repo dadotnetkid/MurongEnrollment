@@ -1,0 +1,45 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "StandardFeeGridView";
+        settings.SettingsDetail.MasterGridName = "EnrollmentGridView";
+
+        settings.Width = Unit.Percentage(100);
+
+        settings.CallbackRouteValues = new { Controller = "Accounting", Action = "StandardFeeGridViewPartial", EnrollmentId = ViewBag.EnrollmentId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Accounting", Action = "StandardFeeGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Accounting", Action = "StandardFeeGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Accounting", Action = "StandardFeeGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("FeeName");
+        settings.Columns.Add(col=> {
+            col.FieldName = "FeeAmount";
+            col.PropertiesEdit.DisplayFormatString = "N2";
+        });
+
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

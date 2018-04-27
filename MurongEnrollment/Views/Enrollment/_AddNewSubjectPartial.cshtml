@@ -1,0 +1,37 @@
+﻿@{
+    Html.DevExpress().CallbackPanel(cbp => {
+        cbp.Name = "cbpScheduledId";
+        cbp.CallbackRouteValues = new { Action = "AddNewSubjectPartial", Controller = "Enrollment" };
+
+        cbp.SetContent(() => {
+
+            Html.DevExpress().TokenBox(col =>
+            {
+                col.Width = Unit.Percentage(100);
+                col.Height = Unit.Pixel(200);
+                col.Name = "tkbScheduleId";
+                col.Properties.TextField = "Subjects.SubjectCode";
+                col.Properties.ValueField = "Id";
+                col.Properties.DataSource = ViewBag.AddedSubjects;
+                col.Properties.ClientSideEvents.BeginCallback = "function(s,e){tkbScheduleId.PerformCallback();}";
+
+
+                col.PreRender = (s, e) =>
+                {
+                    var token = s as MVCxTokenBox;
+                    Dictionary<int, object> dict = new Dictionary<int, object>();
+                    var subjects = ViewBag.AddedSubjects as IEnumerable<Schedules>;
+                    if (subjects != null)
+                    {
+                        foreach (var i in subjects)
+                        {
+                            token.Tokens.Add(i.Subjects.SubjectCode);
+                        }
+                    }
+                };
+            }).BindList(Model).GetHtml();
+        });
+    }).GetHtml();
+
+
+}

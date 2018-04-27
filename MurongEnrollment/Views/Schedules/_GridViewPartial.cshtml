@@ -1,0 +1,65 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "ScheduleGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Schedules", Action = "GridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Schedules", Action = "GridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Schedules", Action = "GridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Schedules", Action = "GridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add(col=> {
+            col.Name = "SubjectCode";
+            col.Caption = "Subject Code";
+            col.FieldName = "Subjects.SubjectCode";
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            ComboBoxProperties cboprop = col.PropertiesEdit as ComboBoxProperties;
+            cboprop.ValueField = "Name";
+            cboprop.TextField = "Name";
+            cboprop.DataSource = ViewBag.subjects;
+
+        });
+        settings.Columns.Add("Subjects.SubjectDescription");
+        settings.Columns.Add("Sections.SectionName");
+        settings.Columns.Add(col=> {
+            col.Name = "Sections.GradeLevels.GradeLevel";
+            col.FieldName = "Sections.GradeLevels.GradeLevel";
+            col.Caption = "Grade Level";
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+
+        });
+        //.Caption=("Grade Level")
+        settings.Columns.Add("Teachers.TeacherName");
+        settings.Columns.Add("Time");
+        settings.Columns.Add("Days");
+        settings.Columns.Add("Room");
+        settings.Columns.Add("SchoolYears.SchoolYear");
+        settings.SetEditFormTemplateContent(col => {
+            Html.RenderAction("AddEditSchedulePartial",new { ScheduleId=DataBinder.Eval(col.DataItem,"Id")});
+        });
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

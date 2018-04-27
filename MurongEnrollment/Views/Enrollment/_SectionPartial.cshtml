@@ -1,0 +1,14 @@
+﻿@{
+
+    Html.DevExpress().ComboBox(cbo =>
+    {
+        cbo.Name = "SectionId";
+        cbo.Properties.ValueField = "Id";
+        cbo.Properties.TextField = "SectionName";
+        cbo.Properties.ClientSideEvents.Init = "function(s,e){console.log(s)}";
+        //   cbo.CallbackRouteValues = new { Action = "SectionPartial", Controller = "Enrollment" };
+        cbo.CallbackRouteValues = new { Controller = "Enrollment", Action = "SectionPartial" };
+         cbo.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){sectionIdValue=s.GetValue(); AvailableSubjectGridView.PerformCallback({SchoolYearId:schoolYearIdValue,SectionId:s.GetValue()});btnEnroll.SetEnabled(true);}";
+    }).BindList(Model).GetHtml();
+}
+

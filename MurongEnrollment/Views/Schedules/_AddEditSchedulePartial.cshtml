@@ -1,0 +1,133 @@
+﻿@model Schedules
+
+
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.SubjectId, lbl =>
+            {
+                lbl.Text = "Subject";
+            }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.SubjectId, c =>
+            {
+                c.Width = Unit.Percentage(100);
+                c.Properties.TextField = "Name";
+                c.Properties.ValueField = "Id";
+            }).BindList(ViewBag.subjects).GetHtml();
+        }
+
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Sections.GradeLevelId, lbl => { lbl.Text = "Grade Level"; }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.Sections.GradeLevelId, c =>
+            {
+                c.Name = "GradeLevelId";
+                c.Width = Unit.Percentage(100);
+                c.Properties.TextField = "GradeLevel";
+                c.Properties.ValueField = "Id";
+                c.Properties.ClientSideEvents.SelectedIndexChanged = "function(s, e) { SectionId.PerformCallback(); }";
+
+            }).BindList(ViewBag.gradelevel).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.SectionId, lbl => { lbl.Text = "Section"; }).GetHtml();
+            Html.RenderAction("SectionPartial", new { GradeLevelid = Model?.Sections?.GradeLevelId, SectionId = Model?.SectionId });
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.TeacherId, lbl =>
+            {
+                lbl.Text = "Teacher";
+            }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.TeacherId, c =>
+            {
+                c.Width = Unit.Percentage(100);
+                c.Properties.TextField = "TeacherName";
+                c.Properties.ValueField = "Id";
+            }).BindList(ViewBag.teacher).GetHtml();
+        }
+
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.SchoolYearId, lbl =>
+            {
+                lbl.Text = "School Year";
+            }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.SchoolYearId, c =>
+            {
+                c.Width = Unit.Percentage(100);
+                c.Properties.TextField = "SchoolYear";
+                c.Properties.ValueField = "Id";
+            }).BindList(ViewBag.schoolyear).GetHtml();
+        }
+
+    </div>
+
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Days).GetHtml();
+            Html.DevExpress().TokenBoxFor(m => m.Day, txt =>
+            {
+
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.TextField = "Day";
+                txt.Properties.ValueField = "Day";
+                txt.PreRender = (s, e) =>
+                {
+                    MVCxTokenBox tokenBox = s as MVCxTokenBox;
+                    if (Model != null)
+                        foreach (var i in Model?.Days?.Split(','))
+                        {
+                            tokenBox.Tokens.Add(i);
+                        }
+
+                };
+            })
+            .BindList(new Schedules().DaysList).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+
+
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Time).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Time, txt => { txt.Width = Unit.Percentage(100); }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Room).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Room, txt => { txt.Width = Unit.Percentage(100); }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().Button(btn =>
+            {
+                btn.ClientSideEvents.Click = "function(s,e){ScheduleGridView.UpdateEdit();}";
+                btn.Name = "btnSave";
+                btn.Text = "Save";
+            }).GetHtml();
+
+            Html.DevExpress().Button(btn =>
+            {
+                btn.ClientSideEvents.Click = "function(s,e){ScheduleGridView.CancelEdit();}";
+                btn.Name = "btnCancel";
+                btn.Text = "Cancel";
+            }).GetHtml();
+        }
+    </div>
+</div>

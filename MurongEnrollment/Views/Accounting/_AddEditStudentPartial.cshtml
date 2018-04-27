@@ -1,0 +1,214 @@
+﻿
+@model Students
+@{
+
+    var isShow = false;
+}
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        @{
+            using (Html.BeginForm("addeditstudentpartial", "Image"))
+            {
+                Html.DevExpress().BinaryImageFor(m => m.Picture, img =>
+                {
+                    if (img.ContentBytes == null)
+                        img.ContentBytes = new Students().NoImage;
+                    img.Properties.EditingSettings.Enabled = true;
+                    img.Width = Unit.Pixel(300);
+                    img.Height = Unit.Pixel(300);
+                    img.Properties.ImageSizeMode = ImageSizeMode.FitProportional;
+                    img.CallbackRouteValues = new { Controller = "Image", Action = "PhotoUploadControlUpload" };
+                }).GetHtml();
+
+            }
+            Html.DevExpress().Button(btn => { btn.Name = "Scan"; btn.Text = "Capture Picture"; btn.ClientSideEvents.Click = "function(s,e){CapturePhoto.Show();snap()}"; }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.StudentId, lbl => { lbl.Text = "Student Number"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.StudentId, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Id Number";
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.FirstName, lbl => { lbl.Text = "First Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.FirstName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "First Name";
+
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.MiddleName, lbl => { lbl.Text = "Middle Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.MiddleName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Middle Name";
+
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.LastName, lbl => { lbl.Text = "Last Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.LastName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Last Name";
+
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.BirthDate, lbl => { lbl.Text = "Birth Date"; }).GetHtml();
+            Html.DevExpress().DateEditFor(m => m.BirthDate, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Birth Date";
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Contact, lbl => { lbl.Text = "Contact"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Contact, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Contact";
+
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Address, lbl => { lbl.Text = "Address"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Address, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Address";
+
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Gender, lbl => { lbl.Text = "Gender"; }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.Gender, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Gender";
+                txt.Properties.ValueField = "Id";
+                txt.Properties.TextField = "Name";
+
+            }).BindList(new Students().GenderList).GetHtml();
+        }
+
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.MotherName, lbl => { lbl.Text = "Mother's Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.MotherName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Mother's Name";
+
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.MotherOccupation, lbl => { lbl.Text = "Mother Occupation"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.MotherOccupation, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Mother Occupation";
+
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.FatherName, lbl => { lbl.Text = "FatherName"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.FatherName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "FatherName";
+
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.FatherOccupation, lbl => { lbl.Text = "Father's Occupation"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.FatherOccupation, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Father Occupation";
+
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.GuardianContact, lbl => { lbl.Text = "Guardian Contact"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.GuardianContact, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.Properties.NullText = "Guardian Occupation";
+
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnSave";
+                btn.Text = "Save";
+                btn.ClientSideEvents.Click = "function(s,e){StudentGridView.UpdateEdit();}";
+            }).GetHtml();
+
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnCancel";
+                btn.Text = "Cancel";
+                btn.ClientSideEvents.Click = "function(s,e){StudentGridView.CancelEdit();}";
+                btn.Style.Add(HtmlTextWriterStyle.MarginLeft, "5px");
+            }).GetHtml();
+
+        }
+       
+
+    </div>
+</div>

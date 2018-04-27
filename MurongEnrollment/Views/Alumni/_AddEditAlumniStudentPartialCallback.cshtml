@@ -1,0 +1,87 @@
+﻿@model Enrollments
+
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Id, lbl => { lbl.Text = "Student"; }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m => m.Id, cbo =>
+            {
+                cbo.Width = Unit.Percentage(100);
+                cbo.Properties.TextField = "Students.FullName";
+                cbo.Properties.ValueField = "Id";
+                cbo.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){ cbpAddEditAlumniStudentPartial.PerformCallback({EnrollmentId:s.GetValue()});}";
+            }).BindList(new UnitOfWork().EnrollmentsRepo.Get(m => m.Sections.GradeLevels.GradeLevel.Contains("12"), includeProperties: "Students")).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Students.FirstName, lbl => { lbl.Text = "First Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Students.FirstName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.ReadOnly = true;
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Students.MiddleName, lbl => { lbl.Text = "Middle Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Students.MiddleName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.ReadOnly = true;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Students.LastName, lbl => { lbl.Text = "Last Name"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Students.LastName, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.ReadOnly = true;
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.SchoolYears.SchoolYear, lbl => { lbl.Text = "School Year"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.SchoolYears.SchoolYear, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.ReadOnly = true;
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().LabelFor(m => m.Students.GradeSection, lbl => { lbl.Text = "Grade Section"; }).GetHtml();
+            Html.DevExpress().TextBoxFor(m => m.Students.GradeSection, txt =>
+            {
+                txt.Width = Unit.Percentage(100);
+                txt.ReadOnly = true;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnSave";
+                btn.Text = "Save";
+                btn.ClientSideEvents.Click = "function(s,e){AlumniGridView.UpdateEdit()}";
+            }).GetHtml();
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnCancel";
+                btn.Text = "Cancel";
+                btn.ClientSideEvents.Click = "function(s,e){AlumniGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+
+</div>

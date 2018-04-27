@@ -1,0 +1,73 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "EnrollmentGridView";
+        settings.CallbackRouteValues = new { Controller = "Accounting", Action = "EnrollmentGridViewPartial", StudentId = ViewBag.StudentId };
+
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Accounting", Action = "EnrollmentGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Accounting", Action = "EnrollmentGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Accounting", Action = "EnrollmentGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+
+        settings.Columns.Add("Students.StudentId");
+        settings.Columns.Add("Students.FullName");
+        settings.Columns.Add(col =>
+        {
+    // col.PropertiesEdit.DisplayFormatString = "N2";
+    col.FieldName = "BalanceStatus";
+        });
+        settings.Columns.Add("SchoolYears.SchoolYear");
+        settings.Columns.Add("Sections.GradeLevels.GradeLevel");
+        settings.Columns.Add(col =>
+        {
+            col.Width = Unit.Percentage(10);
+            col.SetDataItemTemplateContent(e =>
+            {
+                Html.DevExpress().Button(btn =>
+                {
+                    btn.Name = "btnViewPayments" + DataBinder.Eval(e.DataItem, "Id");
+                    btn.Text = "View Payments";
+                    btn.ClientSideEvents.Click = "function(s,e){PaymentPopupControl.Show();paymentHistory('" + DataBinder.Eval(e.DataItem, "Id") + "');}";
+                }).GetHtml();
+            });
+        });
+
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = true;
+        settings.SettingsDetail.ShowDetailRow = true;
+
+        settings.SetDetailRowTemplateContent(col =>
+        {
+            ViewContext.Writer.Write("<h5><b>List of Fees</b></h5>");
+            Html.RenderAction("StandardFeeGridViewPartial", new { EnrollmentId = DataBinder.Eval(col.DataItem, "Id") });
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+

@@ -1,0 +1,21 @@
+﻿
+@{ 
+    Html.DevExpress().CallbackPanel(cbp => {
+        cbp.CallbackRouteValues = new {Action= "AccessmentReportPartial",Controller="Students" };
+        cbp.Name = "cbpAccessmentReportPartial";
+        cbp.SetContent(() => {
+            if (Model != null)
+            {
+                Html.DevExpress().WebDocumentViewer(settings =>
+                {
+                    settings.Height = System.Web.UI.WebControls.Unit.Pixel(700);
+                    settings.Name = "WebDocumentViewer";
+                    settings.Width = Unit.Percentage(100);
+
+                }).Bind(Model).GetHtml();
+            }
+
+        });
+
+    }).GetHtml();
+}

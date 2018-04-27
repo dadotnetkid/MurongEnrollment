@@ -1,0 +1,51 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "ScheduleGridView" + ViewBag.EnrollmentId;
+        settings.ClientSideEvents.Init = "function(sender,e){ScheduleGridViewPartial=sender;console.log(ScheduleGridViewPartial)}";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsDetail.MasterGridName = "EnrollmentGridView";
+
+        settings.CallbackRouteValues = new { Controller = "Students", Action = "ScheduleGridViewPartial", EnrollmentId = ViewBag.EnrollmentId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Students", Action = "ScheduleGridViewPartialAddNew", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Students", Action = "ScheduleGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Students", Action = "ScheduleGridViewPartialDelete", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        //settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Columns.Add("Schedules.Subjects.SubjectCode");
+        settings.Columns.Add("Schedules.Subjects.SubjectDescription");
+        settings.Columns.Add("Schedules.GradeLevelSection");
+        settings.Columns.Add("Schedules.DayTimeRoom");
+        settings.Columns.Add("Schedules.Teachers.TeacherName");
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.RenderAction("AddEditEnrolledSubjectPartial", new { EnrollmentSubjectId = col.KeyValue });
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+
+

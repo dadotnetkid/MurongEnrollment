@@ -1,0 +1,15 @@
+﻿@model Sections
+@{
+
+    Html.DevExpress().ComboBox(col =>
+    {
+        col.Name = "SectionId";
+        col.Width = Unit.Percentage(100);
+        col.Properties.TextField = "SectionName";
+        col.Properties.ValueField = "Id";
+
+        col.Properties.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['GradeLevelId']=GradeLevelId.GetValue();}";
+    //col.Properties.ClientSideEvents.Init = "function(s, e) { SectionId.PerformCallback(); }";
+    col.CallbackRouteValues = new { Controller = "Schedules", Action = "SectionPartial" };
+    }).BindList(ViewBag.GradeLevel).Bind(Model, "Id").GetHtml();
+}

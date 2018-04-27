@@ -1,0 +1,61 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "GradeGridView";
+        settings.SettingsDetail.MasterGridName = "ScheduleGridView";
+        settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['EnrollmentId']=_EnrollmentId;e.customArgs['GradingId']=_GradingId}";
+        settings.ClientSideEvents.EndCallback = "function(s,e){if(s.pageRowCount>0){btnPrint.SetEnabled(true);} }";
+        settings.CallbackRouteValues = new { Controller = "Grade", Action = "GradeGridViewPartial", EnrollmentId = ViewBag.EnrollmentId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Grade", Action = "GradeGridViewPartialAddNew", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Grade", Action = "GradeGridViewPartialUpdate", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Grade", Action = "GradeGridViewPartialDelete", EnrollmentId = ViewBag.EnrollmentId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = Model == null ? false : true ;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Subject Code";
+            col.Name = "EnrollmentId";
+            col.FieldName = "EnrolledSubjects.Schedules.Subjects.SubjectCode";//"EnrolledSubjectId";
+            //col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            //ComboBoxProperties cbo = col.PropertiesEdit as ComboBoxProperties;
+            //string enrollmentId = ViewBag.EnrollmentId;
+            //cbo.TextField = "Schedules.Subjects.SubjectCode";
+            //cbo.ValueField = "Id";
+            //var grades = new UnitOfWork().GradesRepo.Get(m => m.EnrolledSubjects.EnrollmentId == enrollmentId).Select(x => x.EnrolledSubjectId);
+            //cbo.DataSource = new UnitOfWork().EnrolledSubjectsRepo.Get(m => m.EnrollmentId == enrollmentId && !grades.Contains(m.Id));
+            //cbo.DataSource = new UnitOfWork().EnrolledSubjectsRepo.Get(m => m.EnrollmentId == enrollmentId);
+            //cbo.DataSource = new UnitOfWork().EnrolledSubjectsRepo.Get(m => m.EnrollmentId == enrollmentId);
+
+        });
+        settings.Columns.Add("EnrolledSubjects.Schedules.Subjects.SubjectDescription").EditFormSettings.Visible=DefaultBoolean.False;
+        settings.Columns.Add("Grade");
+        settings.SetEditFormTemplateContent(col => {
+            Html.RenderAction("AddEditGradePartial",new { EnrollmentId= ViewBag.EnrollmentId });
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

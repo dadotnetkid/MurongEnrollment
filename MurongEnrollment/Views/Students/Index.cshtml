@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <h5> <b>Students Masterlist</b></h5>
+    </div>
+    <div class="panel-body">
+        @Html.Action("StudentGridViewPartial")
+    </div>
+</div>
+
+
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "AddGradePopupControl";
+    settings.AllowResize = true;
+    settings.ShowHeader = true;
+    settings.ShowOnPageLoad = false;
+    settings.AllowDragging = true;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.CloseOnEscape = true;
+    settings.Modal = true;
+    settings.HeaderText = "Add Grade Subject";
+    settings.Width = Unit.Pixel(400);
+    settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    settings.SetContent(() =>
+    {
+        Html.RenderAction("AddGradePartial");
+    });
+}).GetHtml()
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "CapturePhoto";
+    settings.AllowResize = true;
+    settings.ShowHeader = true;
+    settings.ShowOnPageLoad = false;
+    settings.AllowDragging = true;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.CloseOnEscape = true;
+    settings.HeaderText = "Capture Image";
+//settings.CallbackRouteValues = new { Controller = "Students", Action = "WebCamPartial" };
+settings.Modal = true;
+    settings.Width = Unit.Pixel(400);
+    settings.PopupVerticalAlign = PopupVerticalAlign.TopSides;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    settings.ClientSideEvents.Closing = "function(s,e){Stop()}";
+    settings.SetContent(() =>
+    {
+        Html.RenderPartial("_webcampartial");
+    });
+}).GetHtml()
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "AccessmentReportPopupMenu";
+    settings.AllowResize = true;
+    settings.ShowHeader = true;
+    settings.ShowOnPageLoad = false;
+    settings.AllowDragging = true;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.CloseOnEscape = true;
+    settings.HeaderText = "Print Accessment Report";
+//settings.CallbackRouteValues = new { Controller = "Students", Action = "WebCamPartial" };
+settings.Modal = true;
+    settings.Width = Unit.Pixel(1000);
+    settings.PopupVerticalAlign = PopupVerticalAlign.TopSides;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+ //   settings.ClientSideEvents.Closing = "function(s,e){Stop()}";
+    settings.SetContent(() =>
+    {
+        Html.RenderPartial("_AccessmentReportPartial");
+    });
+}).GetHtml()
+
+
+@Html.DevExpress().LoadingPanel(ldp =>
+{
+    ldp.Name = "ldpAddingGrade";
+    ldp.ContainerElementID = "frmAddSubject";
+
+}).GetHtml();
+<script type="text/javascript">
+
+    var ScheduleGridViewPartial;
+    function printReport(enrollmentId) {
+        AccessmentReportPopupMenu.Show();
+        cbpAccessmentReportPartial.PerformCallback({ EnrollmentId: enrollmentId });
+    }
+</script>

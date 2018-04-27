@@ -1,0 +1,60 @@
+﻿@model LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("Login", "Member", FormMethod.Post))
+{
+    <div class="row margin-top-50">
+
+        <div class="col-lg-4"></div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @{
+                                Html.DevExpress().LabelFor(m => m.Email, lbl => { lbl.Text = "UserName"; }).GetHtml();
+
+                                Html.DevExpress().TextBoxFor(m => m.Email, txt =>
+                                {
+                                    txt.Width = Unit.Percentage(100);
+                                }).GetHtml();
+                            }
+                        </div>
+                    </div>
+                    <div class="row margin-top-10">
+                        <div class="col-lg-12">
+                            @{
+                                Html.DevExpress().LabelFor(m => m.Password, lbl => { lbl.Text = "Password"; }).GetHtml();
+                                Html.DevExpress().TextBoxFor(m => m.Password, txt =>
+                                {
+                                    txt.Width = Unit.Percentage(100);
+                                    txt.Properties.Password = true;
+                                }).GetHtml();
+                            }
+                        </div>
+                    </div>
+                    <div class="row margin-top-10 ">
+                        <div class="col-lg-12">
+                            @{
+                                Html.DevExpress().Button(btn =>
+                                {
+                                    btn.Name = "btnLogin";
+                                    btn.Text = "Login";
+                                    btn.Width = Unit.Percentage(100);
+                                    btn.UseSubmitBehavior = true;
+                                }).GetHtml();
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,20 @@
+﻿
+
+@Html.DevExpress().CallbackPanel(cbp =>
+{
+    cbp.Name = "cbpPrintReceiptPartial";
+    cbp.CallbackRouteValues = new { Action = "PrintReceiptPartial", Controller = "Accounting" };
+    cbp.SetContent(() =>
+    {
+
+        if (Model != null)
+        {
+            Html.DevExpress().WebDocumentViewer(settings =>
+            {
+                settings.Height = System.Web.UI.WebControls.Unit.Pixel(500);
+                settings.Name = "WebDocumentViewer";
+            }).Bind(Model).GetHtml();
+        }
+    });
+
+}).GetHtml()

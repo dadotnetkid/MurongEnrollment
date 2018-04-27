@@ -1,0 +1,38 @@
+﻿@model EnrolledSubjects
+
+@using (Ajax.BeginForm(actionName: "AddGradePartial", controllerName: "Students",routeValues:new { }, ajaxOptions: new AjaxOptions()
+{
+    Confirm = "Do you want to add grade to this Subject",
+    OnComplete = "ScheduleGridViewPartial.PerformCallback();ldpAddingGrade.Hide()",
+    OnBegin= "ldpAddingGrade.Show()",
+
+},htmlAttributes: new { id="frmAddSubject"}))
+{
+    Html.DevExpress().LabelFor(m => m.Id, lbl =>
+    {
+        lbl.Text = "Enrolled Subject";
+    }).GetHtml();
+    Html.DevExpress().ComboBoxFor(m => m.Id, cbo =>
+    {
+        cbo.Width = Unit.Percentage(100);
+        cbo.Properties.ValueType = typeof(string);
+        cbo.Properties.ValueField = "Id";
+        cbo.Properties.TextField = "Schedules.Subjects.SubjectCode";
+    }).BindList(new UnitOfWork().EnrolledSubjectsRepo.Get(filter:m=>m.EnrollmentId==Model.EnrollmentId,includeProperties: "Schedules.Subjects")).GetHtml();
+    Html.DevExpress().LabelFor(m => m.Grade, lbl =>
+    {
+        lbl.Text = "Grade";
+    }).GetHtml();
+    Html.DevExpress().TextBoxFor(m => m.Grade, txt =>
+    {
+        txt.Name = "Grade";
+        txt.Width = Unit.Percentage(100);
+        txt.Properties.DisplayFormatString = "N2";
+    }).GetHtml();
+    Html.DevExpress().Button(btn =>
+    {
+        btn.Name = "btnSubmit";
+        btn.Text = "Submit";
+        btn.UseSubmitBehavior = true;
+    }).GetHtml();
+}

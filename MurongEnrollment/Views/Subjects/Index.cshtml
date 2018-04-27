@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <h5> <b>Subjects</b></h5>
+    </div>
+    <div class="panel-body">
+        @Html.Action("GridViewPartial")
+
+    </div>
+</div>

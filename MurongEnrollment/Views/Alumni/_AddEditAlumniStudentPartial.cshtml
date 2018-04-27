@@ -1,0 +1,12 @@
+﻿@model  Enrollments
+    @{
+        Html.DevExpress().CallbackPanel(cbp =>
+        {
+            cbp.Name = "cbpAddEditAlumniStudentPartial";
+            cbp.CallbackRouteValues = new { Action = "AddEditAlumniStudentPartial", Controller = "Alumni"};
+            cbp.SetContent(() =>
+            {
+                Html.RenderPartial("_AddEditAlumniStudentPartialCallback", Model);
+            });
+        }).GetHtml();
+    }

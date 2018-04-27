@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="pull-left"><b>Schedules</b></h5>
+        @{
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Name = "btnPrintSchedule"; btn.Text = "Print Schedule";
+                btn.ClientSideEvents.Click = "function(s,e){popPrintSubject.Show();}";
+                btn.ControlStyle.CssClass = "pull-right";
+            }).GetHtml();
+        }
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        @Html.Action("GridViewPartial")
+    </div>
+</div>
+
+@{
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "popPrintSubject";
+        settings.HeaderText = "Print Schedules";
+        settings.AllowResize = true;
+        settings.ShowHeader = true;
+        settings.ShowOnPageLoad = false;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = false;
+        settings.Modal = true;
+        settings.Width = Unit.Pixel(300);
+        settings.Height = Unit.Pixel(150);
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.ShowOnPageLoad = false;
+        settings.SetContent(() =>
+        {
+            Html.DevExpress().ComboBox(cbo =>
+            {
+                cbo.Width = Unit.Percentage(100);
+                cbo.Name = "cboSelectSchoolYear";
+                cbo.Properties.ValueField = "Id";
+                cbo.Properties.TextField = "Name";
+            }).BindList(new UnitOfWork().SchoolYearRepo.Get().Select(x => new { Id = x.Id, Name = x.SchoolYear })).GetHtml();
+            Html.DevExpress().Button(btn =>
+            {
+                btn.Style.Add(HtmlTextWriterStyle.MarginTop, "10px");
+                btn.Name = "btnok";
+                btn.ClientSideEvents.Click = "function(s,e){cbpSchedulePrintPreviewPartial.PerformCallback({SchoolYearId:cboSelectSchoolYear.GetValue()});popPrintSchedulePreview.Show();}";
+                btn.Text = "Ok";
+            }).GetHtml();
+        });
+    }).GetHtml();
+
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "popPrintSchedulePreview";
+        settings.HeaderText = "Print Schedules Preview";
+        settings.AllowResize = true;
+        settings.ShowHeader = true;
+        settings.ShowOnPageLoad = false;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = false;
+        settings.Modal = true;
+        settings.Width = Unit.Pixel(400);
+        settings.Height = Unit.Pixel(250);
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.ShowOnPageLoad = false;
+        settings.SetContent(() =>
+        {
+            Html.RenderPartial("_SchedulePrintPreviewPartial");
+        });
+    }).GetHtml();
+}

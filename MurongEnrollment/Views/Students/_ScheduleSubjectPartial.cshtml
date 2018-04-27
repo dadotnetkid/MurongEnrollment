@@ -1,0 +1,11 @@
+﻿
+@{
+    Html.DevExpress().ComboBox(cbo =>
+    {
+        cbo.Width = Unit.Percentage(100);
+        cbo.Name = "ScheduleId";
+        cbo.Properties.TextField = "Name";
+        cbo.Properties.ValueField = "Id";
+        cbo.CallbackRouteValues = new { Controller = "Students", Action = "ScheduleSubjectPartial" };
+    }).BindList(Model).GetHtml();
+}

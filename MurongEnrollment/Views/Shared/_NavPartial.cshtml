@@ -1,0 +1,53 @@
+﻿<nav class="navbar navbar-default navbar-fixed-top bg-primary text-white">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Enrollment System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsInRoles("Admin"))
+                    {
+                        <li>@Html.ActionLink("Students", "Index", "Students")</li>
+                        <li>@Html.ActionLink("Subjects", "Index", "Subjects")</li>
+                        <li>@Html.ActionLink("Schedules", "Index", "Schedules")</li>
+                        <li>@Html.ActionLink("Grade", "Index", "Grade")</li>
+                        <li>@Html.ActionLink("Teachers", "Index", "Teachers")</li>
+                        <li>@Html.ActionLink("School Year", "Index", "SchoolYear")</li>
+                        <li>@Html.ActionLink("Fees", "Index", "Fees")</li>
+                        <li>@Html.ActionLink("Payments", "Index", "accounting")</li>
+                        <li>@Html.ActionLink("Grade Level", "Index", "GradeLevel")</li>
+                        <li>@Html.ActionLink("Sections", "Sections", "GradeLevel")</li>
+                        <li>@Html.ActionLink("Alumni", "Index", "Alumni")</li>
+                        <li>@Html.ActionLink("Manage Users", "Index", "Member")</li>
+                    }
+                    @if (User.Identity.IsInRoles("Registrar"))
+                    {
+
+                        <li>@Html.ActionLink("Students", "Index", "Students")</li>
+                        <li>@Html.ActionLink("Subjects", "Index", "Subjects")</li>
+                        <li>@Html.ActionLink("Schedules", "Index", "Schedules")</li>
+                        <li>@Html.ActionLink("Grade", "Index", "Grade")</li>
+                        <li>@Html.ActionLink("Teachers", "Index", "Teachers")</li>
+                        <li>@Html.ActionLink("Grade Level", "Index", "GradeLevel")</li>
+                        <li>@Html.ActionLink("Sections", "Sections", "GradeLevel")</li>
+                        <li>@Html.ActionLink("Alumni", "Index", "Alumni")</li>
+                    }
+                    @if (User.Identity.IsInRoles("Cashier"))
+                    {
+                        <li>@Html.ActionLink("Fees", "Index", "Fees")</li>
+                        <li>@Html.ActionLink("Payments", "Index", "accounting")</li>
+                    }
+                </ul>
+            }
+
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</nav>

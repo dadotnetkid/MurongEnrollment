@@ -1,0 +1,13 @@
+﻿@model EnrolledSubjects
+<div class="row">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().LabelFor(m => m.Schedules.SectionId, lbl => { lbl.Text = "Grade Level"; }).GetHtml();
+            Html.DevExpress().ComboBoxFor(m=>m.Schedules.SectionId,cbo =>
+            {
+                cbo.Properties.ValueField = "Id";
+                cbo.Properties.TextField = "Name";
+            }).BindList(new UnitOfWork().SectionRepo.Get().Select(x => new { Id = x.Id, Name = x.GradeLevels.GradeLevel + " " + x.SectionName })).GetHtml();
+        }
+    </div>
+</div>
